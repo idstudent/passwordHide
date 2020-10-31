@@ -3,6 +3,7 @@ package com.example.passwordhideexam
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -10,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_app_lock_password.*
 
 class AppLockPasswordActivity : AppCompatActivity(){
     private var oldPwd =""
+    private var inputPwd = ""
     private var changePwdUnlock = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +55,8 @@ class AppLockPasswordActivity : AppCompatActivity(){
                     setEditText(etPasscode3, etPasscode4, strCurrentValue)
                 }
                 etPasscode4.isFocused -> {
-                    etPasscode4.setText(strCurrentValue)
+                    inputPwd += strCurrentValue
+                    etPasscode4.setText("●")
                 }
             }
         }
@@ -92,18 +95,20 @@ class AppLockPasswordActivity : AppCompatActivity(){
         etPasscode3.setText("")
         etPasscode4.setText("")
         etPasscode1.requestFocus()
+        inputPwd =""
     }
 
     // 입력된 비밀번호를 합치기
     private fun inputedPassword():String {
-        return "${etPasscode1.text}${etPasscode2.text}${etPasscode3.text}${etPasscode4.text}"
+        return inputPwd
     }
 
     // EditText 설정
     private fun setEditText(currentEditText : EditText, nextEditText: EditText, strCurrentValue : String){
-        currentEditText.setText(strCurrentValue)
+        currentEditText.setText("●")
         nextEditText.requestFocus()
         nextEditText.setText("")
+        inputPwd += strCurrentValue
     }
 
     // Intent Type 분류
@@ -124,7 +129,7 @@ class AppLockPasswordActivity : AppCompatActivity(){
                     else{
                         onClear()
                         oldPwd = ""
-                        etInputInfo.text = "비밀번호 입력"
+                        etInputInfo.text = "앞의 비밀번호와 다르게 입력했습니다."
                     }
                 }
             }
@@ -137,7 +142,7 @@ class AppLockPasswordActivity : AppCompatActivity(){
                         finish()
                     }
                     else {
-                        etInputInfo.text = "비밀번호가 틀립니다."
+                        etInputInfo.text = "비밀번호가 틀립니다.1"
                         onClear()
                     }
                 }
@@ -152,7 +157,7 @@ class AppLockPasswordActivity : AppCompatActivity(){
                     setResult(Activity.RESULT_OK)
                     finish()
                 }else{
-                    etInputInfo.text = "비밀번호가 틀립니다."
+                    etInputInfo.text = "비밀번호가 틀립니다.2"
                     onClear()
                 }
 
@@ -180,7 +185,7 @@ class AppLockPasswordActivity : AppCompatActivity(){
                         }
                     }
                 } else {
-                    etInputInfo.text = "비밀번호가 틀립니다."
+                    etInputInfo.text = "비밀번호가 틀립니다.3"
                     changePwdUnlock = false
                     onClear()
                 }
