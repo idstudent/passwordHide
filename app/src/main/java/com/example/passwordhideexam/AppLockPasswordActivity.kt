@@ -3,6 +3,7 @@ package com.example.passwordhideexam
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -19,8 +20,15 @@ class AppLockPasswordActivity : AppCompatActivity(){
         setContentView(R.layout.activity_app_lock_password)
 
         val buttonArray = arrayListOf<Button>(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7 ,btn8, btn9, btnClear, btnErase)
+        val editTextArray = arrayListOf<EditText>(etPasscode1,etPasscode2,etPasscode3,etPasscode4)
         for (button in buttonArray){
             button.setOnClickListener(btnListener)
+        }
+
+        // edittext 눌러도 키보드 안뜨도록
+        for(editText in editTextArray) {
+            editText.setTextIsSelectable(true)
+            editText.showSoftInputOnFocus = false
         }
     }
 
